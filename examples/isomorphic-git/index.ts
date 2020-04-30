@@ -17,12 +17,15 @@ const init1Form       = document.getElementById ( 'init1Form' )
 const init1FormResult = document.getElementById ( 'init1FormResult' )
 const clone1Button    = document.getElementById ( 'clone1' )
 const clone1Resutl    = document.getElementById ( 'clone1Result' )
+const consoleLog      = document.getElementById ( 'consoleLog' )
 
 init1Form?.addEventListener (
     'submit' ,
     async event => {
         event.preventDefault ()
         try {
+            // @ts-ignore
+            consoleLog.innerHTML = ''
             await init ( repositoryUrl () )
 
             if ( init1FormResult ) {
@@ -75,3 +78,12 @@ document.addEventListener (
                } )
 
     } )
+
+
+window.console.log = ( message ) => {
+    const nextLog     = document.createElement ( 'div' )
+    nextLog.className = 'alert alert-info'
+    nextLog.innerHTML = message
+
+    consoleLog?.appendChild ( nextLog )
+}
