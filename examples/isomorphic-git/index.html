@@ -10,39 +10,52 @@
     <meta http-equiv="pragma" content="no-cache"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .btn {
+            color: blue;
+            padding: unset;
+            border-radius: unset;
+            border-style: none;
+            background: transparent;
+            border-bottom: #007bff;
+            border-bottom-style: double;
+        }
+
+        html, body {
+            background: #e5e8ea;
+        }
+
+        .card {
+            margin-bottom: 12px;
+            margin-top: 12px;
+        }
+
+        .alert {
+            margin: 12px;
+        }
+    </style>
 </head>
-<body style="margin: 12px">
-<h1>Solid Wiki Dev Client</h1>
-<div id="app" style="margin: 12px">
+<body class="container">
+<h1 style="text-align: center">Solid Git Examples</h1>
 
 
-    <div id="loggedIn" style="display: none">
-        <div id="webIdDisplay">
-            Your are logged in as (WebId): <span id="webId"/>
+<div id="loggedIn" style="display: none" class="card">
+    <div id="webIdDisplay" class="card-body">
+        Your are logged in as (WebId): <span id="webId"></span>.
+        <div style="justify-content: right; display: flex">
+            <button class="btn btn-primary" onclick="SolidWiki.logout()">Logout</button>
         </div>
-        <p>
-            <button type="button" class="btn btn-primary" onclick="SolidWiki.logout()">Logout</button>
-        </p>
-
-        <p>
-            <button type="button" class="btn btn-primary" onclick="SolidWiki.logSomeExampleCommands()">Log Some Example
-                Commands
-            </button>
-            <button class="btn btn-primary" onclick="SolidWiki.logProfile()" type="button">Show Profile Info</button>
-            <button class="btn btn-primary" onclick="SolidWiki.runWikiSampleCommands()" type="button">Run Wiki Sample
-                Commands
-            </button>
-        </p>
-
-
-        <div id="result-container" class="container" style="margin: 12px"></div>
-
     </div>
+</div>
 
-    <div id="loggedOut">
+<div id="loggedOut" class="card">
+    <div class="card-body">
         <span id="loading">Loading&hellip;</span>
         <form id="idpForm" style="display: none">
-            <label for="identity_provider">Your Identity Provider:</label>
+            <p>Please make sure to login, before you try to run the commands.
+            </p>
+
+            <label for="identity_provider"> Your Identity Provider:</label>
             <input
                     type="url"
                     list="known-idps"
@@ -51,11 +64,58 @@
                     placeholder="https://inrupt.net"
             />
             <datalist id="known-idps">
+                <option value="https://alice.localhost:8443/"/>
                 <option value="https://inrupt.net"/>
                 <option value="https://solid.community"/>
             </datalist>
-            <input type="submit" value="Connect"/>
+            <div style="justify-content: right; display: flex">
+                <input class="btn btn-primary" type="submit" value="Login"/>
+            </div>
         </form>
+    </div>
+</div>
+
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h2 class="card-title">Option 1</h2>
+        <p>
+            This first option uses isomorphic-git together with the lightning-fs as a frontend setup. The backend is
+            a
+            Node
+            Solid Server (NSS)
+            which also serves a git http backend.
+        </p>
+        <div>
+            <form id="init1Form">
+                Since isotropic-git is used together with the lightning file system.
+                The git directory must exist in our pod before it can be used. Therefore
+                <input class="btn btn-primary" type="submit" value="init"/>
+                a new bare git directory with the following
+                <input
+                        type="url"
+                        list="git_example_url"
+                        id="init1repository_url"
+                        placeholder="https://localhost:8443/public/test.git"
+                />
+                url.
+
+                <datalist id="git_example_url">
+                    <option value="https://localhost:8443/public/test.git"></option>
+                    <option value="https://localhost:8443/private/test.git"></option>
+                </datalist>
+            </form>
+        </div>
+
+        <div>
+            <p id="init1FormResult"></p> Now
+            <button id="clone1" class="btn btn-primary">clone the repository add a readme, commit and push</button>
+            the changes.
+            <p id="clone1Result"></p>
+        </div>
+
 
     </div>
 </div>
