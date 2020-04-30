@@ -56,7 +56,11 @@ const renderLogin = ( webId : string ) => {
     webIdElement!.textContent
         = webId
     elLoggedIn!.style.display
-        = 'initial'
+        = 'flex'
+
+
+    elLoggedOut!.style.display
+        = 'none'
 }
 
 const renderLogout = () => {
@@ -65,7 +69,7 @@ const renderLogout = () => {
     elLoggedIn!.style.display
                = 'none'
     elLoggedOut!.style.display
-               = 'initial'
+               = 'flex'
     // @ts-ignore
     const form = document.forms.idpForm
     form.style.display
