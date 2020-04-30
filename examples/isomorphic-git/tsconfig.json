@@ -3,7 +3,7 @@
     "baseUrl": "./src",
     "paths": {
       "domain/*": [
-        "domain/*"
+        "minimal-solid-fs/domain/*"
       ]
     },
     /* Basic Options */

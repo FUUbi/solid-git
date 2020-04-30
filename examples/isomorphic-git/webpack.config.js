@@ -32,7 +32,7 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
-      domain: srcPath('domain/'),
+      domain: srcPath('minimal-solid-fs/domain'),
     }
   },
   output: {
