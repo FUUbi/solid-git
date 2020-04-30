@@ -34,7 +34,6 @@ async function getWebId () {
     /* 1. Check if we've already got the user's WebID and access to their Pod: */
     let session = await auth.currentSession ()
     if ( session ) {
-        console.log ( `Session WebId known: ${ session.webId }` )
         return session.webId
     }
 

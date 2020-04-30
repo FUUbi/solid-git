@@ -66,6 +66,8 @@ clone1Button?.addEventListener (
         }
     }
 )
+
+
 document.addEventListener (
     'DOMContentLoaded' ,
     async function ( event ) {
@@ -73,7 +75,11 @@ document.addEventListener (
         session.getWebId ()
                .then ( ( webId ) => {
                    if ( webId ) {
+                       console.log ( `Session WebId is defined for user  ${ webId }` )
                        session.renderLogin ( webId )
+                   }
+                   else {
+                       console.log ( 'Session WebId is not defined. Login please.' )
                    }
                } )
 

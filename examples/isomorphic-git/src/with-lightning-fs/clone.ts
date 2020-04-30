@@ -3,10 +3,13 @@ import git      from 'isomorphic-git'
 import { http } from './http/http'
 
 export async function clone ( url : string ) {
+    console.log ( 'Init lightning file system.' )
     const fs  = new FS ( 'fs' ,
                          { wipe : true } )
     const pfs = fs.promises
     const dir = '/examples'
+
+    console.log ( 'Clone repository.' )
     await git.clone ( {
                           fs ,
                           http ,
@@ -16,15 +19,21 @@ export async function clone ( url : string ) {
                           singleBranch : true ,
                           depth :        1
                       } )
-    console.log ( await pfs.readdir ( dir ) )
+    console.log ( 'List content of current directory: ' + await pfs.readdir ( dir ) )
+
+    const newMessage = 'Very short README' + Math.random ()
+    console.log ( `Update README.md with:  ${ newMessage }` )
+
     await fs.promises.writeFile (
         `${ dir }/README.md` ,
-        'Very short README' ,
+        newMessage ,
         'utf8'
     )
 
+    console.log ( `Stage README.md` )
     await git.add ( { fs , dir , filepath : 'README.md' } )
 
+    console.log ( `Commit.` )
     await git.commit (
         {
             fs ,
@@ -37,12 +46,12 @@ export async function clone ( url : string ) {
         }
     )
 
-    let pushResult = await git.push ( {
-                                          fs ,
-                                          http ,
-                                          dir ,
-                                      } )
+    console.log ( `Push.` )
+    await git.push ( {
+                         fs ,
+                         http ,
+                         dir ,
+                     } )
 
 
-    return
 }

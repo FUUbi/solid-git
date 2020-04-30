@@ -24,7 +24,6 @@ export async function request ( {
     if ( body ) {
         body = await collect ( body )
     }
-    console.log ( url )
     const res  = await auth.fetch (
         url ,
         { method , headers , body }
