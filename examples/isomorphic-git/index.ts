@@ -1,6 +1,7 @@
-import { session } from './src/session/Session'
-import { clone }   from './src/with-lightning-fs/clone'
-import { init }    from './src/with-lightning-fs/init'
+import { session }                                         from './src/session/Session'
+import { cloneAddCommitPush as cloneAddCommitPushwithLFS } from './src/with-lightning-fs/clone-add-commit-push'
+import { init as initWithLFS }                             from './src/with-lightning-fs/init'
+import { init }                                            from './src/with-minimal-solid-fs/init'
 
 module.exports = {
     login :  session.getWebId () ,
@@ -17,7 +18,6 @@ const init1Form       = document.getElementById ( 'init1Form' )
 const init1FormResult = document.getElementById ( 'init1FormResult' )
 const clone1Button    = document.getElementById ( 'clone1' )
 const clone1Resutl    = document.getElementById ( 'clone1Result' )
-const consoleLog      = document.getElementById ( 'consoleLog' )
 
 init1Form?.addEventListener (
     'submit' ,
@@ -26,7 +26,7 @@ init1Form?.addEventListener (
         try {
             // @ts-ignore
             consoleLog.innerHTML = ''
-            await init ( repositoryUrl () )
+            await initWithLFS ( repositoryUrl () )
 
             if ( init1FormResult ) {
                 init1FormResult.innerHTML =
@@ -49,7 +49,7 @@ clone1Button?.addEventListener (
     async event => {
 
         try {
-            await clone ( repositoryUrl () )
+            await cloneAddCommitPushwithLFS ( repositoryUrl () )
             if ( clone1Resutl ) {
                 clone1Resutl.innerHTML =
                     `<div  class="alert alert-success" role="alert">
@@ -86,6 +86,7 @@ document.addEventListener (
     } )
 
 
+const consoleLog      = document.getElementById ( 'consoleLog' )
 window.console.log = ( message ) => {
     const nextLog     = document.createElement ( 'div' )
     nextLog.className = 'alert alert-info'

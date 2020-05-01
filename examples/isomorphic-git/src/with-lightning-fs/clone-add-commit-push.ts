@@ -2,7 +2,7 @@ import FS       from '@isomorphic-git/lightning-fs'
 import git      from 'isomorphic-git'
 import { http } from './http/http'
 
-export async function clone ( url : string ) {
+export async function cloneAddCommitPush ( url : string ) {
     console.log ( 'Init lightning file system.' )
     const fs  = new FS ( 'fs' ,
                          { wipe : true } )
