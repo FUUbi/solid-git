@@ -29,7 +29,7 @@ export class Container extends Node {
     }
 
     async getResources () : Promise<( TurtleResource | Container | Resource | BinaryResource )[]> {
-        console.log ( this.tag ( ( 'Get resources.' ) ) )
+        console.debug ( this.tag ( ( 'Get resources.' ) ) )
         const all : Resource[] =
                   await this.path[ ldp.contains ]
                       .toArray ()
