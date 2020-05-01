@@ -18,7 +18,7 @@ const repositoryUrl = () : string => {
 const init1Form       = document.getElementById ( 'init1Form' )
 const init1FormResult = document.getElementById ( 'init1FormResult' )
 const clone1Button    = document.getElementById ( 'clone1' )
-const clone1Resutl    = document.getElementById ( 'clone1Result' )
+const clone1Result    = document.getElementById ( 'clone1Result' )
 
 init1Form?.addEventListener (
     'submit' ,
@@ -51,8 +51,8 @@ clone1Button?.addEventListener (
 
         try {
             await cloneAddCommitPushwithLFS ( repositoryUrl () )
-            if ( clone1Resutl ) {
-                clone1Resutl.innerHTML =
+            if ( clone1Result ) {
+                clone1Result.innerHTML =
                     `<div  class="alert alert-success" role="alert">
                      That's it. You can have a look at the <a href="${ repositoryUrl () }/objects">.git/objects</a> folder. 
                      If you see a info, a pack and some two digits folders every thing worked as expected.
@@ -60,8 +60,8 @@ clone1Button?.addEventListener (
             }
         }
         catch ( e ) {
-            if ( clone1Resutl ) {
-                clone1Resutl.innerHTML =
+            if ( clone1Result ) {
+                clone1Result.innerHTML =
                     `<div  class="alert alert-danger" role="alert">${ e.message } </div>`
             }
         }
