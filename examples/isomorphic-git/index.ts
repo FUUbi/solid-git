@@ -1,8 +1,8 @@
 import { session }                                         from './src/session/Session'
 import { cloneAddCommitPush as cloneAddCommitPushwithLFS } from './src/with-lightning-fs/clone-add-commit-push'
 import { init as initWithLFS }                             from './src/with-lightning-fs/init'
-import { cloneAddCommitPush }                              from './src/with-minimal-solid-fs/add-commit'
-import { init }                                            from './src/with-minimal-solid-fs/init'
+import { addCommit as addCommitWithMSFS }                  from './src/with-minimal-solid-fs/add-commit'
+import { init as initWithMSFS }                            from './src/with-minimal-solid-fs/init'
 
 module.exports = {
     login :  session.getWebId () ,
@@ -10,11 +10,8 @@ module.exports = {
 }
 
 
-const repositoryUrl = () : string => {
-    // @ts-ignore
-    return document.getElementById ( 'init1repository_url' ).value
-}
-
+// @ts-ignore
+const repositoryUrl   = () : string => document.getElementById ( 'init1repository_url' ).value
 const init1Form       = document.getElementById ( 'init1Form' )
 const init1FormResult = document.getElementById ( 'init1FormResult' )
 const clone1Button    = document.getElementById ( 'clone1' )
@@ -69,6 +66,63 @@ clone1Button?.addEventListener (
 )
 
 
+// @ts-ignore
+const repositoryUrl2  = () : string => document.getElementById ( 'init2repository_url' ).value
+const init2Form       = document.getElementById ( 'init2Form' )
+const init2FormResult = document.getElementById ( 'init2FormResult' )
+const clone2Button    = document.getElementById ( 'clone2' )
+const clone2Result    = document.getElementById ( 'clone2Result' )
+
+init2Form?.addEventListener (
+    'submit' ,
+    async event => {
+        event.preventDefault ()
+        try {
+            // @ts-ignore
+            consoleLog.innerHTML = ''
+            await initWithMSFS ( repositoryUrl2 () )
+
+            if ( init2FormResult ) {
+                init2FormResult.innerHTML =
+                    `<div  class="alert alert-success" role="alert">
+                                    Great 🎊🎊, check it out <a href="${ repositoryUrl2 () }">here</a>.
+                                 </div>`
+            }
+        }
+        catch ( e ) {
+            if ( init2FormResult ) {
+                init2FormResult.innerHTML =
+                    `<div  class="alert alert-danger" role="alert">${ e.message } </div>`
+            }
+        }
+    }
+)
+
+clone2Button?.addEventListener (
+    'click' ,
+    async event => {
+
+        try {
+
+            await addCommitWithMSFS ( repositoryUrl2 () )
+            if ( clone2Result ) {
+                clone2Result.innerHTML =
+                    `<div  class="alert alert-success" role="alert">
+                     That's it. You can have a look at the <a href="${ repositoryUrl2 () }/.git/objects">.git/objects</a> folder. 
+                     If you see a info, a pack and some two digits folders every thing worked as expected.
+                     </div>`
+            }
+        }
+        catch ( e ) {
+            if ( clone2Result ) {
+                clone2Result.innerHTML =
+                    `<div  class="alert alert-danger" role="alert">${ e.message } </div>`
+            }
+        }
+    }
+)
+
+
 document.addEventListener (
     'DOMContentLoaded' ,
     async function ( event ) {
@@ -84,8 +138,6 @@ document.addEventListener (
                    }
                } )
 
-        init ( 'https://localhost:8443/public/some-repo/' )
-        cloneAddCommitPush ( 'https://localhost:8443/public/some-repo/' )
     } )
 
 

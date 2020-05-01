@@ -81,7 +81,6 @@
 
 
 <div class="card">
-
     <img src="assets/option-1.svg" class="card-img-top">
     <div class="card-body">
 
@@ -119,6 +118,47 @@
             <button id="clone1" class="btn btn-primary">clone the repository add a readme, commit and push</button>
             the changes.
             <p id="clone1Result"></p>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="card">
+    <img src="assets/option-2.svg" class="card-img-top">
+    <div class="card-body">
+
+        <h2 class="card-title">Option 2</h2>
+        <p>
+            Second Option introduction
+        </p>
+        <div>
+            <form id="init2Form">
+                Since isotropic-git is used together with the minimal solid file system.
+                The git directory must also exist in our pod before it can be used. Therefore
+                <input class="btn btn-primary" type="submit" value="init"/>
+                a new git directory with the following
+                <input
+                        type="url"
+                        list="git_example_url2"
+                        id="init2repository_url"
+                        placeholder="https://localhost:8443/public/test"
+                />
+                url.
+
+                <datalist id="git_example_url2">
+                    <option value="https://localhost:8443/public/test"></option>
+                    <option value="https://localhost:8443/private/test"></option>
+                </datalist>
+            </form>
+        </div>
+
+        <div>
+            <p id="init2FormResult"></p> Now
+            <button id="clone2" class="btn btn-primary">add a readme and commit</button>
+            the changes.
+            <p id="clone2Result"></p>
         </div>
 
 

@@ -5,7 +5,7 @@ import {
     SolidFileSystem
 }           from '../minimal-solid-fs/solid-file-system'
 
-export async function cloneAddCommitPush ( url : string ) {
+export async function addCommit ( url : string ) {
     console.log ( 'Init minimal solid file system.' )
     const dir = url
     const fs  = new SolidFileSystem (
