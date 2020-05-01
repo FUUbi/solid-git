@@ -1,6 +1,7 @@
 import { session }                                         from './src/session/Session'
 import { cloneAddCommitPush as cloneAddCommitPushwithLFS } from './src/with-lightning-fs/clone-add-commit-push'
 import { init as initWithLFS }                             from './src/with-lightning-fs/init'
+import { cloneAddCommitPush }                              from './src/with-minimal-solid-fs/add-commit'
 import { init }                                            from './src/with-minimal-solid-fs/init'
 
 module.exports = {
@@ -83,6 +84,8 @@ document.addEventListener (
                    }
                } )
 
+        init ( 'https://localhost:8443/public/some-repo/' )
+        cloneAddCommitPush ( 'https://localhost:8443/public/some-repo/' )
     } )
 
 
@@ -93,4 +96,5 @@ window.console.log = ( message ) => {
     nextLog.innerHTML = message
 
     consoleLog?.appendChild ( nextLog )
+    console.debug ( message )
 }
