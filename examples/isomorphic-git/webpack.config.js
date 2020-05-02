@@ -56,6 +56,9 @@ module.exports = {
       ].filter(f => /\.(js|css|scss)$/.test(f)),
       append: false
     }),
+    new CopyWebpackPlugin(
+        ['assets/*', 'bootstrap.min.css']
+    ),
     new CircularDependencyPlugin({
       // exclude detection of files based on a RegExp
       exclude: /a\.js|node_modules/,
