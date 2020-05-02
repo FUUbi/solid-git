@@ -37,11 +37,72 @@
         .alert {
             margin: 12px;
         }
+
+        .card-title {
+            text-align: center;
+        }
     </style>
 </head>
 <body class="container">
-<h1 style="text-align: center">Solid Git Examples</h1>
 
+<div class="card">
+    <div class="card-body">
+        <h1 style="text-align: center">Solid Git Examples</h1>
+
+        <p>
+            This interactive documentation introduces two option on how to use the version control system
+            <a href="https://git-scm.com/">Git</a> together with a
+            <a href="https://github.com/solid/node-solid-server">Node Solid Server</a> (NSS).
+            The first does currently only work with
+            <a href="https://github.com/FUUbi/node-solid-server">this</a>
+            NSS fork. For now, you have to check
+            out the <a href="https://github.com/FUUbi/node-solid-server/tree/feature/git-backend">feature branch</a>
+            "feature/git-backend". The second option works with a regular NSS.
+        </p>
+
+
+        <h2>Comparison</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Option 1</th>
+                <th scope="col">Option 2</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Speed</th>
+                <td> 🐆 Fast<br>
+                    <p style="margin-left: 12px">It implements the <a
+                            href="https://git-scm.com/book/it/v2/Git-Internals-Transfer-Protocols">Git HTTP Transfer
+                        Protocol</a>.</p>
+                </td>
+                <td>🦥 Slow <br>
+                    <p style="margin-left: 12px">Every file system operation also invokes an HTTP Request.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Offline</th>
+                <td>👍 The <a href="https://github.com/isomorphic-git/lightning-fs">Lightning Fs</a> provides fast
+                    offline-first capabilities.
+                </td>
+                <td>👎 The <a
+                        href="https://github.com/FUUbi/solid-git/tree/master/examples/isomorphic-git/src/minimal-solid-fs">Minimal
+                    Solid FS</a> does not support any offline capabilities.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>
+            We will evaluate both approaches in-depth as soon as possible. Besides, the <a
+                href="https://github.com/FUUbi/solid-git/tree/master/examples/isomorphic-git/src/minimal-solid-fs">Minimal
+            Solid FS</a> is enormously
+            experimental, which leaves a lot of room for optimization.
+        </p>
+    </div>
+</div>
 
 <div id="loggedIn" style="display: none" class="card">
     <div id="webIdDisplay" class="card-body">
@@ -65,12 +126,12 @@
                     list="known-idps"
                     id="identity_provider"
                     name="identity_provider"
-                    placeholder="https://inrupt.net"
+                    placeholder="https://solid.community"
             />
             <datalist id="known-idps">
-                <option value="https://alice.localhost:8443/"/>
                 <option value="https://inrupt.net"/>
                 <option value="https://solid.community"/>
+                <option value="https://alice.localhost:8443/"/>
             </datalist>
             <div style="justify-content: right; display: flex">
                 <input class="btn btn-primary" type="submit" value="Login"/>
@@ -80,43 +141,43 @@
 </div>
 
 
+
 <div class="card">
     <img src="assets/option-1.svg" class="card-img-top">
     <div class="card-body">
-
         <h2 class="card-title">Option 1</h2>
         <p>
-            This first option uses isomorphic-git together with the lightning-fs as a frontend setup. The backend is
-            a
-            Node
-            Solid Server (NSS)
-            which also serves a git http backend.
+            This first option uses <a href="https://isomorphic-git.org/">Isomorphic Git</a> together with the
+            <a href="https://github.com/isomorphic-git/lightning-fs">Lightning Fs</a> as a frontend setup. The backend
+            is
+            a NSS+<a href="https://www.npmjs.com/package/@fuubi/node-git-http-backend">node-git-http-backend</a>, which
+            also serves a <a href="https://git-scm.com/docs/git-http-backend">git http backend</a>.
         </p>
         <div>
             <form id="init1Form">
-                Since isotropic-git is used together with the lightning file system.
-                The git directory must exist in our pod before it can be used. Therefore
-                <input class="btn btn-primary" type="submit" value="init"/>
-                a new bare git directory with the following
+                Therefore the <input class="btn btn-primary" type="submit" value="POST"/> Request triggers the server to
+                initialise a bare git repository
                 <input
                         type="url"
-                        list="git_example_url"
+                        list="git_example_url1"
                         id="init1repository_url"
-                        placeholder="https://localhost:8443/public/test.git"
+                        placeholder="https://alice.example.org/public/test.git"
                 />
-                url.
-
-                <datalist id="git_example_url">
-                    <option value="https://localhost:8443/public/test.git"></option>
-                    <option value="https://localhost:8443/private/test.git"></option>
-                </datalist>
+                (<a href="https://github.com/FUUbi/solid-git/blob/master/examples/isomorphic-git/src/with-lightning-fs/init.ts">source
+                code</a>).
+                <datalist id="git_example_url1"></datalist>
             </form>
         </div>
 
+
         <div>
-            <p id="init1FormResult"></p> Now
-            <button id="clone1" class="btn btn-primary">clone the repository add a readme, commit and push</button>
-            the changes.
+            <p id="init1FormResult"></p>
+
+            Once the repository exists, we can
+            <button id="clone1" class="btn btn-primary">clone it add a readme, commit and push</button>
+            the changes
+            (<a href="https://github.com/FUUbi/solid-git/blob/master/examples/isomorphic-git/src/with-lightning-fs/clone-add-commit-push.ts">source
+            code</a>).
             <p id="clone1Result"></p>
         </div>
 
@@ -126,38 +187,42 @@
 
 
 <div class="card">
+
     <img src="assets/option-2.svg" class="card-img-top">
     <div class="card-body">
-
         <h2 class="card-title">Option 2</h2>
         <p>
-            Second Option introduction
         </p>
         <div>
             <form id="init2Form">
-                Since isotropic-git is used together with the minimal solid file system.
-                The git directory must also exist in our pod before it can be used. Therefore
+                In the second option, <a href="https://isomorphic-git.org/">Isomorphic Git</a> takes care of
+                initialising the git directory structure. The
                 <input class="btn btn-primary" type="submit" value="init"/>
-                a new git directory with the following
+                command
+                initialises a git repository
                 <input
                         type="url"
                         list="git_example_url2"
                         id="init2repository_url"
-                        placeholder="https://localhost:8443/public/test"
+                        placeholder="https://alice.example.org/public/test"
                 />
-                url.
+                with a working tree, instead of a bare directory as it is done in the first option
+                (<a href="https://github.com/FUUbi/solid-git/blob/master/examples/isomorphic-git/src/with-minimal-solid-fs/init.ts">source
+                code</a>).
 
-                <datalist id="git_example_url2">
-                    <option value="https://localhost:8443/public/test"></option>
-                    <option value="https://localhost:8443/private/test"></option>
-                </datalist>
+                <datalist id="git_example_url2"></datalist>
             </form>
         </div>
-
         <div>
-            <p id="init2FormResult"></p> Now
+            <p id="init2FormResult"></p>
+
+            Since we read and write directly to the pod, we don't clone, and neither do we push the change
+            explicitly.
+            Instead, they are immediately written to our pod. Therefore, we can directly
             <button id="clone2" class="btn btn-primary">add a readme and commit</button>
-            the changes.
+            the changes
+            (<a href="https://github.com/FUUbi/solid-git/blob/master/examples/isomorphic-git/src/with-minimal-solid-fs/add-commit.ts">source
+            code</a>).
             <p id="clone2Result"></p>
         </div>
 
@@ -165,12 +230,7 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title">Console </h2>
-        <div id="consoleLog"></div>
-    </div>
-</div>
+
 </body>
 </html>
 
