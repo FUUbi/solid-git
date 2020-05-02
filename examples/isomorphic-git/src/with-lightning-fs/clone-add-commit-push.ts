@@ -19,10 +19,16 @@ export async function cloneAddCommitPush ( url : string ) {
                           singleBranch : true ,
                           depth :        1
                       } )
-    console.log ( 'List content of current directory: ' + await pfs.readdir ( dir ) )
+    console.log ( 'List content of current directory: <br> ' +
+                      ( await pfs.readdir ( dir ) )
+                          .reduce ( (
+                                        a ,
+                                        b
+                                    ) => `&nbsp; ${ a } <br> &nbsp; ${ b } <br>` )
+    )
 
-    const newMessage = 'Very short README' + Math.random ()
-    console.log ( `Update README.md with:  ${ newMessage }` )
+    const newMessage = 'Very short README with a random number: ' + Math.random ()
+    console.log ( `Update README.md with the following content:  <br>  &nbsp; ${ newMessage }` )
 
     await fs.promises.writeFile (
         `${ dir }/README.md` ,
