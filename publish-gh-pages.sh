@@ -7,7 +7,7 @@ npm i
 npm run-script build
 mv dist/* ../../
 cd ../..
-rm -r examples
+rm -r examples .idea LICENSE README.md
 
 git add .
 git commit -m "update github pages"
