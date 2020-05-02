@@ -9,9 +9,10 @@ module.exports = {
     logout : session.logout ,
 }
 
+let currentLogElement = ''
 
 // @ts-ignore
-const repositoryUrl   = () : string => document.getElementById ( 'init1repository_url' ).value
+const repositoryUrl1  = () : string => document.getElementById ( 'init1repository_url' ).value
 const init1Form       = document.getElementById ( 'init1Form' )
 const init1FormResult = document.getElementById ( 'init1FormResult' )
 const clone1Button    = document.getElementById ( 'clone1' )
@@ -22,22 +23,22 @@ init1Form?.addEventListener (
     async event => {
         event.preventDefault ()
         try {
-            // @ts-ignore
-            consoleLog.innerHTML = ''
-            await initWithLFS ( repositoryUrl () )
+            currentLogElement = 'init1FormResult'
+            clearLog ()
 
-            if ( init1FormResult ) {
-                init1FormResult.innerHTML =
-                    `<div  class="alert alert-success" role="alert">
-                                    Great 🎊🎊, check it out <a href="${ repositoryUrl () }">here</a>.
-                                 </div>`
-            }
+            await initWithLFS ( repositoryUrl1 () )
+            console.log (
+                `
+                  Great 🎊🎊, check it out <a href="${ repositoryUrl1 () }">here</a>.
+                  ` ,
+                'alert alert-success'
+            )
         }
         catch ( e ) {
-            if ( init1FormResult ) {
-                init1FormResult.innerHTML =
-                    `<div  class="alert alert-danger" role="alert">${ e.message } </div>`
-            }
+            console.log (
+                e.message ,
+                'alert alert-danger'
+            )
         }
     }
 )
@@ -47,20 +48,24 @@ clone1Button?.addEventListener (
     async event => {
 
         try {
-            await cloneAddCommitPushwithLFS ( repositoryUrl () )
-            if ( clone1Result ) {
-                clone1Result.innerHTML =
-                    `<div  class="alert alert-success" role="alert">
-                     That's it. You can have a look at the <a href="${ repositoryUrl () }/objects">.git/objects</a> folder. 
-                     If you see a info, a pack and some two digits folders every thing worked as expected.
-                     </div>`
-            }
+            currentLogElement = 'clone1Result'
+            clearLog ()
+
+            await cloneAddCommitPushwithLFS ( repositoryUrl1 () )
+
+            console.log (
+                `
+                 That's it. You can have a look at the <a href="${ repositoryUrl1 () }/objects">.git/objects</a> folder. 
+                 If you see a info, a pack and some two digits folders every thing worked as expected.
+                ` ,
+                'alert alert-success'
+            )
         }
         catch ( e ) {
-            if ( clone1Result ) {
-                clone1Result.innerHTML =
-                    `<div  class="alert alert-danger" role="alert">${ e.message } </div>`
-            }
+            console.log (
+                e.message ,
+                'alert alert-danger'
+            )
         }
     }
 )
@@ -73,27 +78,29 @@ const init2FormResult = document.getElementById ( 'init2FormResult' )
 const clone2Button    = document.getElementById ( 'clone2' )
 const clone2Result    = document.getElementById ( 'clone2Result' )
 
+
 init2Form?.addEventListener (
     'submit' ,
     async event => {
         event.preventDefault ()
         try {
-            // @ts-ignore
-            consoleLog.innerHTML = ''
+            currentLogElement = 'init2FormResult'
+            clearLog ()
+
             await initWithMSFS ( repositoryUrl2 () )
 
-            if ( init2FormResult ) {
-                init2FormResult.innerHTML =
-                    `<div  class="alert alert-success" role="alert">
-                                    Great 🎊🎊, check it out <a href="${ repositoryUrl2 () }">here</a>.
-                                 </div>`
-            }
+            console.log (
+                `
+                  Great 🎊🎊, check it out <a href="${ repositoryUrl2 () }">here</a>.
+                  ` ,
+                'alert alert-success'
+            )
         }
         catch ( e ) {
-            if ( init2FormResult ) {
-                init2FormResult.innerHTML =
-                    `<div  class="alert alert-danger" role="alert">${ e.message } </div>`
-            }
+            console.log (
+                e.message ,
+                'alert alert-danger'
+            )
         }
     }
 )
@@ -101,27 +108,32 @@ init2Form?.addEventListener (
 clone2Button?.addEventListener (
     'click' ,
     async event => {
-
+        currentLogElement = 'clone2Result'
+        clearLog ()
         try {
-
             await addCommitWithMSFS ( repositoryUrl2 () )
-            if ( clone2Result ) {
-                clone2Result.innerHTML =
-                    `<div  class="alert alert-success" role="alert">
-                     That's it. You can have a look at the <a href="${ repositoryUrl2 () }/.git/objects">.git/objects</a> folder. 
-                     If you see a info, a pack and some two digits folders every thing worked as expected.
-                     </div>`
-            }
+            console.log (
+                `That's it. You can have a look at the <a href="${ repositoryUrl2 () }/.git/objects">.git/objects</a> folder. 
+                        If you see a info, a pack and some two digits folders every thing worked as expected.` ,
+                'alert alert-success' )
         }
         catch ( e ) {
-            if ( clone2Result ) {
-                clone2Result.innerHTML =
-                    `<div  class="alert alert-danger" role="alert">${ e.message } </div>`
-            }
+            console.log ( e.message ,
+                          'alert alert-danger'
+            )
         }
     }
 )
 
+const updateDataList = (
+    id : string ,
+    value : string
+) => {
+    const el : HTMLDataListElement = document.getElementById ( id ) as HTMLDataListElement
+    const option                   = document.createElement ( 'option' )
+    option.value                   = value
+    el.append ( option )
+}
 
 document.addEventListener (
     'DOMContentLoaded' ,
@@ -132,6 +144,23 @@ document.addEventListener (
                    if ( webId ) {
                        console.log ( `Session WebId is defined for user  ${ webId }` )
                        session.renderLogin ( webId )
+                       const origin = new URL ( webId ).origin
+                       updateDataList (
+                           'git_example_url1' ,
+                           `${ origin }/public/test.git`
+                       )
+                       updateDataList (
+                           'git_example_url1' ,
+                           `${ origin }/private/test.git`
+                       )
+                       updateDataList (
+                           'git_example_url2' ,
+                           `${ origin }/public/test`
+                       )
+                       updateDataList (
+                           'git_example_url2' ,
+                           `${ origin }/private/test`
+                       )
                    }
                    else {
                        console.log ( 'Session WebId is not defined. Login please.' )
@@ -141,12 +170,22 @@ document.addEventListener (
     } )
 
 
-const consoleLog      = document.getElementById ( 'consoleLog' )
-window.console.log = ( message ) => {
+const consoleLogElement = () => document.getElementById ( currentLogElement )
+window.console.log      = ( message ,
+                            className : string = 'alert alert-info' ) => {
     const nextLog     = document.createElement ( 'div' )
-    nextLog.className = 'alert alert-info'
+    nextLog.className = className
     nextLog.innerHTML = message
 
-    consoleLog?.appendChild ( nextLog )
+    consoleLogElement ()
+        ?.appendChild ( nextLog )
     console.debug ( message )
+}
+
+
+function clearLog () {
+    const el = consoleLogElement ()
+    el
+    ? el.innerHTML = ''
+    : null
 }
