@@ -1,11 +1,11 @@
 import { ENOENT }    from '../errors'
-import { PathLike }  from '../path'
 import { Encoding }  from '../promisified-fs'
 import {
     checkResponse ,
     httpGET
 }                    from '../utils/http'
 import { HttpError } from '../utils/http-error'
+import { PathLike }            from 'fs'
 
 export async function readFile (
     path : PathLike ,
@@ -14,6 +14,7 @@ export async function readFile (
                    flag? : string | number
                } | null
 ) : Promise<ArrayBuffer | string> {
+    path = `https://${ path }`
     console.debug ( `Read file: ${ path }` )
 
     const res = null
@@ -27,7 +28,7 @@ export async function readFile (
         }
     }
     catch ( e ) {
-        throw ENOENT.withPathInfo ( path.asUrl )
+        throw ENOENT.withPathInfo ( path )
     }
 
     // @ts-ignore

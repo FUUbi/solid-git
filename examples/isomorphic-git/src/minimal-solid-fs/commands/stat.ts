@@ -32,15 +32,7 @@ unction compareStats(entry, stats) {
 export async function stat ( path : PathLike ) : Promise<Stats> {
     console.debug ( `Get linked data stats of resource ${ path }` )
     // isomorphic git splits up the path up,
-    path = path.toString ()
-               .replace (
-                   /^https:\/(?!\/)/g ,
-                   'https://'
-               )
-               .replace (
-                   /^http:\/(?!\/)/g ,
-                   'http://'
-               )
+    path = `https://${ path }`
     try {
         let directory = ''
         path          = path.toString ()

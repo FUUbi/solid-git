@@ -10,6 +10,7 @@ export async function mkdir (
     options : number | string | MakeDirectoryOptions | undefined | null
 ) : Promise<void> {
 
+    path = `https://${ path }`
     const repo = new ContainerRepository ()
     console.debug ( `Linked data make dir: ${ path }` )
     try {

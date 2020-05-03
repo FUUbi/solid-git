@@ -11,6 +11,7 @@ export async function writeFile (
                     flag? : string | number
                 } | string | null
 ) : Promise<void> {
+    path = `https://${ path }`
     const repo = new ResourceRepository ()
     console.debug ( `Linked data write file ${ path }` )
     await httpPUT (

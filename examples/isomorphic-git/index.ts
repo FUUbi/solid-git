@@ -87,7 +87,7 @@ init2Form?.addEventListener (
             currentLogElement = 'init2FormResult'
             clearLog ()
 
-            await initWithMSFS ( repositoryUrl2 () )
+            await initWithMSFS ( new URL ( repositoryUrl2 () ) )
 
             console.log (
                 `
@@ -111,7 +111,7 @@ clone2Button?.addEventListener (
         currentLogElement = 'clone2Result'
         clearLog ()
         try {
-            await addCommitWithMSFS ( repositoryUrl2 () )
+            await addCommitWithMSFS ( new URL ( repositoryUrl2 () ) )
             console.log (
                 `That's it. You can have a look at the <a href="${ repositoryUrl2 () }/.git/objects">.git/objects</a> folder. 
                         If you see a info, a pack and some two digits folders every thing worked as expected.` ,

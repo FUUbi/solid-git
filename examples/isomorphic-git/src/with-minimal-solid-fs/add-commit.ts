@@ -5,9 +5,9 @@ import {
     SolidFileSystem
 }           from '../minimal-solid-fs/solid-file-system'
 
-export async function addCommit ( url : string ) {
+export async function addCommit ( url : URL ) {
     console.log ( 'Init minimal solid file system.' )
-    const dir = url
+    const dir = `${url.host}/${url.pathname}`
     const fs  = new SolidFileSystem (
         auth ,
         minimalFs ,

@@ -9,6 +9,7 @@ export async function readdir (
         = { encoding : 'utf-8' }
 ) :
     Promise<string[ ]> {
+    path = `https://${ path }`
     console.debug ( 'Linked data file system read dir' )
     const container = await new ContainerRepository ().get ( path.toString () )
     if ( !await new Resource ( container.getPath () ).isOfTypeContainer () ) {

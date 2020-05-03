@@ -5,8 +5,8 @@ import {
     SolidFileSystem
 }           from '../minimal-solid-fs/solid-file-system'
 
-export async function init ( url : string ) {
-    const dir = url
+export async function init ( url : URL ) {
+    const dir = `${url.host}/${url.pathname}`
     const fs  = new SolidFileSystem (
         auth ,
         minimalFs ,
